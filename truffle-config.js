@@ -1,4 +1,5 @@
 module.exports = {
+  contracts_build_directory: "./client/contracts",
   networks: {
     loc_ganache_ganache: {
       network_id: "*",
