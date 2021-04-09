@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta description="Insurance platform built onto the Binance Smart Chain">
+    <title>Insurance dApp</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!--Scripts-->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+    <script type="text/javascript" src="node_modules/web3/dist/web3.min.js"></script>
+    <script type="text/javascript" src="src/connect_web3.js"></script>
+    <script src="src/app.js"></script>
+    <script type="text/javascript" src="src/web3.min.js"></script>
+    <script type="text/javascript" src="src/utils.js"></script>
+    <script type="text/javascript" src="src/index.js"></script>
+    <script type="text/javascript" src="contracts/HelloWorld.json"></script>
+    <!--
+    <h2 class="title-heading">CryptoInsure</h2>
+    Status: <span id="status">Loading Metamask...</span>
+    -->
+
+    <div class="navbar">
+        <div class="container">
+            <!--Wordmark:-->
+            <a class="logo" href="index.html">Crypto<span>Insure</span></a>
+
+            <!--CTA = call to animation-->
+            <img id="mobile-cta" class="mobile-menu" src="assets/menu.svg" alt="Menu Button">
+
+            <nav>
+                <img id="mobile-exit" class="mobile-menu-exit" src="assets/exit.svg" alt="Exit Menu Button">
+
+                <!--unordered list-->
+                <ul class="primary-nav">
+                    <!--list item-->
+                    <li class="get-metamask"><a href="https://metamask.io/download">Get Metamask</a></li> <!--CTRL+ALT+DOWN to copy lines-->
+                    <li class="bsc-scan"><a href="https://www.bscscan.com/">BSC Scan</a></li>
+                    <li class="github"><a href="https://github.com/Ericking879/BSC-Master-class-group-28-project">Github Repo</a></li> <!--use # for blank link-->
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <div class="left-col">
+                <p class="subheading">Insurance Has Never Been This Safe</p>
+                <h1>Crypto<span>Insure</span> <div class="DeIns-title">Decentralized Insurance</div></h1>
+
+                <div class="hero-cta">
+                    <a href="#" class="primary-cta">See for yourself</a>
+                    <a href="#" class="watch-video-cta">
+                        <img src="assets/yt_play_button.svg" alt="Watch The Demo Video">
+                        Watch the demo video
+                    </a>
+                </div>
+
+            </div>
+
+            <img class="hero-img" src="assets/money_in_vault.svg" alt="Insurance Secured Illustration">
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <ul>
+                <li>Fully secure platform</li>
+                <li>Developed on the Binance Smart Chain</li>
+                <li>24/7 Service</li>
+                <li>Take advantage of Decentralized Finance</li>
+
+            </ul>
+
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <ul class="testimonials-list">
+                <li>
+                    <img src="assets/pexels-liza-sokolova-3399810.jpg" alt="Person's testimonial">
+
+                    <blockquote>"Lorem ipsum dolar sit amet."</blockquote>
+                    <cite> - Person 1</cite>
+
+                </li>
+
+                <li>
+                    <img src="assets/pexels-jonathan-borba-4635233.jpg" alt="Person's testimonial">
+
+                    <blockquote>"Lorem ipsum dolar sit amet."</blockquote>
+                    <cite> - Person 2</cite>
+
+                </li>
+
+                <li>
+                    <img src="assets/pexels-jorge-fakhouri-filho-2701660.jpg" alt="Person's testimonial">
+
+                    <blockquote>"Lorem ipsum dolar sit amet."</blockquote>
+                    <cite> - Person 2</cite>
+
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-left">
+                <h2>Contact for inquiries</h2>
+
+                <form action="">
+                    <label for="name">Name</label>
+                    <input id="name" type="text" name="name">
+
+                    <label for="email">Email</label>
+                    <input id="emaii" type="email" name="email">
+
+                    <label for="message">Message</label>
+                    <textarea name="message" id="message" cols="30" rows="10" placeholder="Enter your inquiry message..."></textarea>
+
+                    <input type="submit" class="send-message-cta" value="Send Message">
+                </form>
+            </div>
+
+            <div class="contact-right">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3221.903300718437!2d-115.17753911316142!3d36.14456767830642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c8c3f921d75f97%3A0xfaed8f546ddb5015!2sPizza%20Hut!5e0!3m2!1sen!2sza!4v1617985615410!5m2!1sen!2sza" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        const mobileBtn = document.getElementById("mobile-cta")
+              nav = document.querySelector("nav") // don't need to say const if don't ; in prev. line
+              mobileBtnExit = document.getElementById("mobile-exit");
+
+        mobileBtn.addEventListener("click", () => {
+            nav.classList.add("mobile-menu");
+        })
+
+        mobileBtnExit.addEventListener("click", () => {
+            nav.classList.remove("mobile-menu");
+        })
+
+    </script>
+
+</body>
+
+</html>

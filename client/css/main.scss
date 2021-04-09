@@ -1,0 +1,398 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+
+:root {
+    --primary-color: limegreen;
+    --secondary-color: #ba160c;
+    --secondary-color-dark: #7a3c3c;
+}
+
+// CSS Ruleset:
+body { // Selector
+    background: #EFEFEF; // CSS Property
+    margin: 0; // margin works on outside
+    font-family: "Open Sans";
+}
+
+.navbar { // class navbar
+    background: white;
+    padding: 1em; // padding works on inside
+
+    // nested ruleset only in sass:
+    .logo {
+        text-decoration: none;
+        font-weight: 700;
+        //font-style: italic;
+        color: black;
+        font-size: 1.2em;
+
+        span {
+            color: var(--primary-color);
+        }
+    }
+
+    nav {
+        display: none;
+    }
+    
+    .container {
+        display: flex; // one way to structure layouts
+        place-content: space-between;
+    }
+
+    .mobile-menu {
+        cursor: pointer;
+    }
+}
+
+a { // reference all a elements
+    color: #312e2e;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+section {
+    padding: 5em 2em; //5em top+bottom, 2em left+right
+}
+
+.hero {
+    text-align: center;
+}
+
+.left-col {
+    
+    .subheading {
+        text-transform: uppercase;
+        font-size: 0.75em;
+        font-weight: 700;
+        color: gray;
+        letter-spacing: 0.15em;
+    }
+
+    h1 {
+        font-size: 2.5em;
+        line-height: 1.2em;
+        margin-top: 0.2em;
+
+        .DeIns-title {
+            font-style: italic;
+            font-weight: 600;
+            font-size: 0.585em;
+            //color: gray;
+            margin-top: 0.3em;
+            line-height: 1em;
+        }
+    }
+
+    span {
+        color: var(--primary-color);
+    }
+
+    .primary-cta {
+        background: var(--primary-color);
+        color: white;
+        text-decoration: none;
+        padding: 0.6em 1.3em;
+        font-size: 0.9em;
+        border-radius: 5em; // some arbitarily large amount
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .watch-video-cta {
+        //display: block;
+        //margin-top: 1em;// same as -> margin: 1em 0 0 0;
+
+        img {
+            margin-right: 0.2em;
+            width: 4%;
+            padding: 0 0 0 0;
+            margin-bottom: -0.125em;
+        }
+
+        background: var(--secondary-color);
+        padding: 0.575em 0em;
+        margin-left: 0.5em;
+        margin-top: 0.95em;
+        border-radius: 5em;
+        display: inline-block;
+        width: unset;
+
+        text-decoration: none;
+        color: white;
+        font-weight: 600;
+        font-size: 0.9em;
+    }
+}
+
+.hero-img {
+    margin-top: 1.1em;
+    width: 40%;
+}
+
+section.features {
+    background: #73c2fb;
+    font-weight: 600;
+
+    ul {
+        margin: 0;
+        padding-left: 0.1em;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+
+        li {
+            font-size: 1.1em;
+            margin-bottom: 1em;
+            margin-top: 2em;
+            position: relative;
+            margin-left: 0.85em;
+    
+            &:before {
+                content: '';
+                position: absolute;
+                left: -1.65em;
+                width: 20px;
+                height: 20px;
+                background-image: url(../assets/bullet.svg);
+                background-size: contain;
+                margin-right: 0.75em;
+                margin-top: 0.15em;
+            }
+        }
+    }
+}
+
+.testimonials {
+    background: #cc6666;
+    color: white;
+
+        li {
+            background: var(--secondary-color-dark);
+            text-align: center;
+            padding: 2em 1em;
+            width: 80%;
+            margin: 5em auto 5em auto;
+            border-radius: 1em;
+            img {
+                width: 5em;
+                height: 5em;
+                border: 5px solid var(--secondary-color-dark);
+                border-radius: 50%;
+                margin-top: -4.5em;
+            }
+        }
+
+}
+
+h2 {
+    font-size: 2em;
+}
+
+label {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 0.8em;
+    margin-bottom: 1em;
+    border-radius: 0.3em;
+    border: 1px solid gray;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    font-size: 1.3em;
+    border: none;
+    margin-bottom: 5em;
+    border-radius: 5em;
+    display: inline-block;
+    padding: 0.8em 2em;
+    width: unset;
+    cursor: pointer;
+}
+
+iframe {
+    width: 100%;
+    height: 300px;
+}
+
+nav.mobile-menu {
+    display: block;
+}
+
+nav {
+    position: fixed; // always shows while scrolling
+    z-index: 999;
+    width: 66%;
+    right: 0;
+    top: 0;
+    background: gray;
+    padding: 1em;
+    height: 100vh; // height of device
+
+    ul.primary-nav {
+        margin-top: 5em;
+    }
+
+    li {
+        a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 0.5em;
+            font-size: 1.3em;
+            text-align: right;
+        }
+
+        &:hover {
+            font-weight: 700;
+        }
+    }
+}
+
+.mobile-menu-exit {
+    float: right;
+    margin: 0.5em;
+    cursor: pointer;
+}
+
+// media query:
+@media only screen and (min-width: 700px) {
+    .mobile-menu, .mobile-menu-exit {
+        display: none;
+    }
+
+    .navbar .container {
+        display: grid;
+        grid-template-columns:  180px auto; // 180px for the logo, then take up the rest of the space for everything else
+        justify-content: unset;
+    }
+
+    .navbar nav {
+        display: flex;
+        justify-content: space-between;
+        background: none;
+        position: unset;
+        height: auto;
+        width: 100%;
+        padding: 0;
+
+        ul {
+            display: flex;
+        }
+
+        a {
+            color: black;
+            font-size: 1em;
+            padding: 0.1em 1em;
+        }
+
+        ul.primary-nav {
+            margin: 0;
+        }
+
+        li.current a {
+            font-weight: 700;
+        }
+        li.get-metamask a {
+            color: orange;
+            border: 3px solid orange;
+            font-weight: 700;
+            border-radius: 5em;
+            margin-top: -0.2em;
+        }
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    .container {
+        width: 900px; // centers the container once 900px reached
+        margin: 0 auto;
+    }
+
+    section {
+        padding: 10em 4em;
+    }
+
+    .hero .container {
+        display: flex;
+        justify-content: space-between;
+        text-align: left;
+
+        .left-col {
+            margin: 3em 3em 0 5em;
+
+            h1 {
+                font-size: 3em;
+                width: 90%;
+            }
+        }
+    }
+
+    .hero-img {
+        width: 30%;
+        margin-right: 8em;
+    }
+
+    .hero-cta {
+        display: flex;
+    }
+    .primary-cta {
+        margin-right: 1em;
+    }
+    .watch-video-cta {
+        margin-right: 1em;
+    }
+
+    ul.features {
+        display: block;
+        margin-left: 5em;
+
+        li {
+            font-size: 1.4em;
+
+            &:before {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    }
+
+    .testimonials ul {
+        display: flex; //display next to each other
+        
+
+        li {
+            margin: 0 1em;
+        }
+    }
+
+    .contact-section {
+        position: relative;
+
+        .container {
+            display: flex;
+        }
+    }
+
+    .contact-right {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 45%;
+        height: 100%;
+
+        iframe {
+            height: 100%;
+        }
+    }
+}
