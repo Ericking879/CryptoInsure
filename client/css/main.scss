@@ -5,11 +5,12 @@
     --secondary-color: #ba160c;
     --secondary-color-dark: #7a3c3c;
     --metamask-color-orange: #F5841F;
+    --off-gray-color: #EFEFEF;
 }
 
 // CSS Ruleset:
 body { // Selector
-    background: #EFEFEF; // CSS Property
+    background: var(--off-gray-color); // CSS Property
     margin: 0; // margin works on outside
     font-family: "Open Sans";
 }
@@ -134,6 +135,10 @@ section {
     width: 40%;
 }
 
+section.contract-interaction {
+    background: var(--primary-color);
+}
+
 section.features {
     background: #73c2fb;
     font-weight: 600;
@@ -167,6 +172,10 @@ section.features {
 }
 
 .features {
+    h2 {
+        color: black;
+    }
+
     &:before {
         content: '';
         position: absolute;
@@ -190,6 +199,10 @@ section.features {
 .testimonials {
     background: #cc6666;
     color: white;
+
+    h2 {
+        color: var(--off-gray-color);
+    }
 
     &:after {
         content: '';
@@ -218,6 +231,7 @@ section.features {
     }
 
 }
+
 
 h2 {
     font-size: 2em;
@@ -432,6 +446,17 @@ nav {
                 width: 30px;
                 height: 30px;
             }
+        }
+    }
+
+    .testimonials {
+        h2 {
+            margin-bottom: 3em;
+            margin-left: 0.5em;
+        }
+
+        &:after {
+            margin-top: 9.5em;
         }
     }
 

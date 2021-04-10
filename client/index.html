@@ -11,9 +11,9 @@
 <body>
     <!--Scripts-->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
-    <script type="text/javascript" src="node_modules/web3/dist/web3.min.js"></script>
+    <!--<script type="text/javascript" src="node_modules/web3/dist/web3.min.js"></script>
     <script type="text/javascript" src="src/connect_web3.js"></script>
-    <script src="src/app.js"></script>
+    <script src="src/app.js"></script>-->
     <script type="text/javascript" src="src/web3.min.js"></script>
     <script type="text/javascript" src="src/utils.js"></script>
     <script type="text/javascript" src="src/index.js"></script>
@@ -66,8 +66,38 @@
         </div>
     </section>
 
+    <section class="contract-interaction">
+        <div class="container">
+            <h2>Interact With The Smartcontract</h2>
+
+            <div class="interact-left">
+                <label for="months-options">Enter the months of wallet insurance:</label>
+                <select name="months-options" id="select-num-months" class="custom-months">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="6">6</option>
+                    <option value="9">9</option>
+                    <option value="12">12</option>
+                </select>
+
+                <button class="submit-new-insurance-plan">Begin insurance plan</button>
+            </div>
+
+            <div class="interact-mid">
+                
+                    <label for="pay-months-premium">Click to pay this month's premium:</label>
+                    <button class="pay-months-premium">Pay</button>
+                
+            </div>
+
+            <div class="interact-right"></div>
+        </div>
+    </section>
+
     <section class="features">
         <div class="container">
+            <h2>Features</h2>
             <ul>
                 <li>Fully secure platform</li>
                 <li>Developed on the Binance Smart Chain</li>
@@ -81,6 +111,7 @@
 
     <section class="testimonials">
         <div class="container">
+            <h2>Testimonials</h2>
             <!--People in testimonials generated from fakenamegenerator.com + royalty-free images-->
             <ul class="testimonials-list">
                 <li>
