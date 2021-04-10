@@ -37,7 +37,7 @@
                 <!--unordered list-->
                 <ul class="primary-nav">
                     <!--list item-->
-                    <li class="get-metamask"><a href="https://metamask.io/download">Get Metamask</a></li> <!--CTRL+ALT+DOWN to copy lines-->
+                    <li id="no-have-metamask" class="get-metamask"><a href="https://metamask.io/download">Get Metamask</a></li> <!--CTRL+ALT+DOWN to copy lines-->
                     <li class="bsc-scan"><a href="https://www.bscscan.com/">BSC Scan</a></li>
                     <li class="github"><a href="https://github.com/Ericking879/BSC-Master-class-group-28-project">Github Repo</a></li> <!--use # for blank link-->
 
@@ -53,7 +53,7 @@
                 <h1>Crypto<span>Insure</span> <div class="DeIns-title">Decentralized Insurance</div></h1>
 
                 <div class="hero-cta">
-                    <a href="#" class="primary-cta">See for yourself</a>
+                    <a href="#" class="primary-cta">See how it works</a>
                     <a href="#" class="watch-video-cta">
                         <img src="assets/yt_play_button.svg" alt="Watch The Demo Video">
                         Watch the demo video
@@ -81,28 +81,29 @@
 
     <section class="testimonials">
         <div class="container">
+            <!--People in testimonials generated from fakenamegenerator.com + royalty-free images-->
             <ul class="testimonials-list">
                 <li>
                     <img src="assets/pexels-liza-sokolova-3399810.jpg" alt="Person's testimonial">
 
-                    <blockquote>"Lorem ipsum dolar sit amet."</blockquote>
-                    <cite> - Person 1</cite>
+                    <blockquote>"You can never go wrong with blockchain technology."</blockquote>
+                    <cite> - Richard Donovan</cite>
 
                 </li>
 
                 <li>
                     <img src="assets/pexels-jonathan-borba-4635233.jpg" alt="Person's testimonial">
 
-                    <blockquote>"Lorem ipsum dolar sit amet."</blockquote>
-                    <cite> - Person 2</cite>
+                    <blockquote>"I can always trust in the blockchain. After all, code is law!"</blockquote>
+                    <cite> - Melinda Lewis</cite>
 
                 </li>
 
                 <li>
                     <img src="assets/pexels-jorge-fakhouri-filho-2701660.jpg" alt="Person's testimonial">
 
-                    <blockquote>"Lorem ipsum dolar sit amet."</blockquote>
-                    <cite> - Person 2</cite>
+                    <blockquote>"Never felt safer in my insurance provider."</blockquote>
+                    <cite> - Holly Allen</cite>
 
                 </li>
             </ul>
@@ -112,7 +113,7 @@
     <section class="contact-section">
         <div class="container">
             <div class="contact-left">
-                <h2>Contact for inquiries</h2>
+                <h2>Contact For Inquiries</h2>
 
                 <form action="">
                     <label for="name">Name</label>
@@ -148,6 +149,15 @@
             nav.classList.remove("mobile-menu");
         })
 
+        function do_not_have_metamask() {
+            if (window.matchMedia("only screen and (min-width: 700px)").matches) {
+                document.getElementById("no-have-metamask").className = "not-have-metamask";
+            }
+            else {
+                document.getElementById("no-have-metamask").className = "get-metamask";
+            }
+            
+        }
     </script>
 
 </body>

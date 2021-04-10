@@ -4,6 +4,7 @@
     --primary-color: limegreen;
     --secondary-color: #ba160c;
     --secondary-color-dark: #7a3c3c;
+    --metamask-color-orange: #F5841F;
 }
 
 // CSS Ruleset:
@@ -165,25 +166,56 @@ section.features {
     }
 }
 
+.features {
+    &:before {
+        content: '';
+        position: absolute;
+        width: 50%;
+        height: 2.5em;
+        background: var(--secondary-color-dark);
+        left: 0;
+        margin-top: -5.5em;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        width: 50%;
+        height: 2.5em;
+        background: var(--secondary-color-dark);
+        right: 0;
+        margin-top: 3em;
+    }
+}
+
 .testimonials {
     background: #cc6666;
     color: white;
 
-        li {
-            background: var(--secondary-color-dark);
-            text-align: center;
-            padding: 2em 1em;
-            width: 80%;
-            margin: 5em auto 5em auto;
-            border-radius: 1em;
-            img {
-                width: 5em;
-                height: 5em;
-                border: 5px solid var(--secondary-color-dark);
-                border-radius: 50%;
-                margin-top: -4.5em;
-            }
+    &:after {
+        content: '';
+        position: absolute;
+        width: 50%;
+        height: 2.5em;
+        background: var(--secondary-color-dark);
+        left: 0;
+        margin-top: 4.5em;
+    }
+
+    li {
+        background: var(--secondary-color-dark);
+        text-align: center;
+        padding: 2em 1em;
+        width: 80%;
+        margin: 5em auto 5em auto;
+        border-radius: 1em;
+        img {
+            width: 5em;
+            height: 5em;
+            border: 5px solid var(--secondary-color-dark);
+            border-radius: 50%;
+            margin-top: -4.5em;
         }
+    }
 
 }
 
@@ -303,17 +335,17 @@ nav {
         li.current a {
             font-weight: 700;
         }
-        li.get-metamask a {
+        /*li.get-metamask a {
             color: orange;
             border: 3px solid orange;
             font-weight: 700;
             border-radius: 5em;
             margin-top: -0.2em;
-        }
+        }*/
     }
 }
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 985px) {
     .container {
         width: 900px; // centers the container once 900px reached
         margin: 0 auto;
@@ -336,6 +368,24 @@ nav {
                 width: 90%;
             }
         }
+
+        .watch-video-cta {
+            padding: 1em;
+            text-align: center;
+            margin-right: 1em;
+            img {
+                //width: 0.5em;
+                margin-bottom: 0.1em;
+            }
+        }
+
+        .primary-cta {
+            margin-right: 0.5em;
+            //padding-left: 5em;
+            padding-top: 0.75em;
+            text-align: center;
+            display: inline;
+        }
     }
 
     .hero-img {
@@ -346,11 +396,29 @@ nav {
     .hero-cta {
         display: flex;
     }
-    .primary-cta {
-        margin-right: 1em;
-    }
-    .watch-video-cta {
-        margin-right: 1em;
+
+    .features {
+        &:before {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 2.5em;
+            background: var(--secondary-color-dark);
+            left: 0;
+            //top: 0;
+            margin-top: -11em;
+        }
+        &:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 2.5em;
+            background: var(--secondary-color-dark);
+            right: 0;
+            //top: 0;
+            margin-top: 9em;
+            //margin-left: 34em;
+        }
     }
 
     ul.features {
@@ -395,4 +463,13 @@ nav {
             height: 100%;
         }
     }
+}
+
+.not-have-metamask {
+    //color: orange;
+    //font-display: orange;
+    border: 3px solid var(--metamask-color-orange);
+    font-weight: 700;
+    border-radius: 5em;
+    margin-top: -0.2em;
 }
