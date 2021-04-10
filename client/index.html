@@ -69,30 +69,31 @@
     <section class="contract-interaction">
         <div class="container">
             <h2>Interact With The Smartcontract</h2>
+            <ul>
+                <li class="interact-left">
+                    <label for="months-options">Enter the months of wallet insurance:</label>
+                    <select name="months-options" id="months-options" class="months-options">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="6">6</option>
+                        <option value="9">9</option>
+                        <option value="12">12</option>
+                    </select>
 
-            <div class="interact-left">
-                <label for="months-options">Enter the months of wallet insurance:</label>
-                <select name="months-options" id="select-num-months" class="custom-months">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="6">6</option>
-                    <option value="9">9</option>
-                    <option value="12">12</option>
-                </select>
+                    <button class="submit-new-insurance-plan">Begin insurance plan</button>
+                </li>
 
-                <button class="submit-new-insurance-plan">Begin insurance plan</button>
-            </div>
+                <li class="interact-mid">
+                    <label for="pay-months-premium">Click to pay this month's premium:</label>
+                    <button id="pay-months-premium" class="pay-months-premium">Pay</button>
+                </li>
 
-            <div class="interact-mid">
-                <label for="pay-months-premium">Click to pay this month's premium:</label>
-                <button id="pay-months-premium" class="pay-months-premium">Pay</button>
-            </div>
-
-            <div class="interact-right">
-                <label for="request-payout">Request a payout on your insurance plan</label>
-                <button id='request-payout' class="request-payout">Request Payout</button>
-            </div>
+                <li class="interact-right">
+                    <label for="request-payout">Request a payout on your insurance plan:</label>
+                    <button id='request-payout' class="request-payout">Request Payout</button>
+                </li>
+            </ul>
         </div>
     </section>
 

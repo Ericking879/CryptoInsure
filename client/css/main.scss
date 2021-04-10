@@ -6,6 +6,7 @@
     --secondary-color-dark: #7a3c3c;
     --metamask-color-orange: #F5841F;
     --off-gray-color: #EFEFEF;
+    --tertiary-color: #73c2fb;
 }
 
 // CSS Ruleset:
@@ -135,12 +136,69 @@ section {
     width: 40%;
 }
 
-section.contract-interaction {
-    background: var(--primary-color);
+@media only screen and (max-width: 985px) {
+    section.contract-interaction {
+        padding-top: 5em;
+        background: var(--primary-color);
+        display: flex;
+
+        h2 {
+            margin-bottom: 2em;
+        }
+
+        button {
+            background-color: var(--tertiary-color);
+            border: 0;
+            border-radius: 5em;
+            color: black;
+            padding: 0.25em 0.5em;
+            font-size: large;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        label {
+            // background-color: var(--off-gray-color);
+            font-size: large;
+            font-weight: 600;
+            // border: 1px solid black;
+            // border-radius: 10em;
+            text-align: left;
+            // padding: auto auto 0.1em auto;
+            // width: 100%;
+        }
+
+        li {
+            margin-top: 2em;
+        }
+
+        select {
+            padding: 0.15em;
+            font-size: large;
+            border: 2px solid black;
+            border-radius: 5em;
+            cursor: pointer;
+        }
+
+        // span {
+        //     font-weight: 700;
+        //     font-size: x-large;
+        // }
+
+        &:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 2.5em;
+            background: var(--secondary-color-dark);
+            right: 0;
+            margin-top: -7em;
+        }
+    }
 }
 
 section.features {
-    background: #73c2fb;
+    background: var(--tertiary-color);
     font-weight: 600;
 
     ul {
@@ -410,6 +468,105 @@ nav {
     .hero-cta {
         display: flex;
     }
+
+    .contract-interaction {
+        padding-top: 7em;;
+        background: var(--primary-color);
+        display: flex;
+
+        h2 {
+            display: inline-block;
+            margin-bottom: 2em;
+        }
+
+        ul {
+            display: flex;
+
+        }
+
+        label {
+            //border: 1px solid black;
+            //width: fit-content;
+            //background-color: var(--off-gray-color);
+            //border-radius: 50em;
+            //padding-right: 1em;
+            //padding-left: 1em;
+            font-weight: 600;
+            // margin-left: 0.5em;
+            // margin-right: 0.5em;
+            //margin: auto 0.5em;
+        }
+
+        button {
+            background-color: var(--tertiary-color);
+            border: 0;
+            border-radius: 5em;
+            color: black;
+            padding: 0.25em 0.5em;
+            font-size: large;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5em;
+            margin-left: 2.75em;
+        }
+
+        .submit-new-insurance-plan {
+            margin-left: 0.2em;
+        }
+
+        select {
+            padding: 0.15em;
+            font-size: large;
+            border: 2px solid black;
+            border-radius: 5em;
+            cursor: pointer;
+            margin-left: -3em;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 2.5em;
+            background: var(--secondary-color-dark);
+            right: 0;
+            margin-top: -9em;
+        }
+
+        ul li {
+            margin: 0 2em;
+        }
+    }
+
+    // .contract-interaction {
+    //     text-align: left;
+
+    //     h2 {
+    //         display: inline-block;
+            
+    //     }
+
+    //     .interact-left {
+    //         display: flex;
+    //         &:before {
+    //             width: 10px;
+    //             height: 10px;
+    //         }
+    //     }
+    //     .interact-mid {
+    //         display: flex;
+    //     }
+    //     .interact-right {
+    //         display: flex;
+    //     }
+
+    //     label {
+    //         padding: 0;
+    //         margin: 0;
+    //         border: none;
+    //     }
+    // }
+
 
     .features {
         &:before {
