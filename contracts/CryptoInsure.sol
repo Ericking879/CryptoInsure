@@ -140,6 +140,7 @@ contract CryptoInsure {
         address payable wallet = payable(msg.sender);
         wallet.transfer(policies[msg.sender].balance);
         policies[msg.sender].exists = false;
+        policies[msg.sender].balance = 0;
         return true;
     }
 
