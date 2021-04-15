@@ -120,7 +120,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.6.0;\r\n\r\ninterface AggregatorV3Interface {\r\n    function decimals() external view returns (uint8);\r\n\r\n    function description() external view returns (string memory);\r\n\r\n    function version() external view returns (uint256);\r\n\r\n    // getRoundData and latestRoundData should both raise \"No data present\"\r\n    // if they do not have data to report, instead of returning unset values\r\n    // which could be misinterpreted as actual reported values.\r\n    function getRoundData(uint80 _roundId)\r\n        external\r\n        view\r\n        returns (\r\n            uint80 roundId,\r\n            int256 answer,\r\n            uint256 startedAt,\r\n            uint256 updatedAt,\r\n            uint80 answeredInRound\r\n        );\r\n\r\n    function latestRoundData()\r\n        external\r\n        view\r\n        returns (\r\n            uint80 roundId,\r\n            int256 answer,\r\n            uint256 startedAt,\r\n            uint256 updatedAt,\r\n            uint80 answeredInRound\r\n        );\r\n}\r\n",
-  "sourcePath": "e:\\git\\BSC-Master-class-group-28-project\\contracts\\AggregatorV3Interface.sol",
+  "sourcePath": "e:/git/BSC-Master-class-group-28-project/contracts/AggregatorV3Interface.sol",
   "ast": {
     "absolutePath": "/e/git/BSC-Master-class-group-28-project/contracts/AggregatorV3Interface.sol",
     "exportedSymbols": {
@@ -1364,7 +1364,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-04-15T20:16:33.197Z",
+  "updatedAt": "2021-04-15T20:19:14.121Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

@@ -89,7 +89,7 @@ contract CryptoInsure {
     } 
 
     function registerPolicy(uint amntToInsure, uint termInMonths) public payable returns(bool registered) { 
-        if (msg.value < 1 || policies[msg.sender].exists) { // 1 BNB is the minimum insured amount
+        if (msg.value < 100000000 || policies[msg.sender].exists) { // 1 BNB is the minimum insured amount
             revert();
         } 
         Policy memory policy;
@@ -170,12 +170,14 @@ contract CryptoInsure {
     function cancelPolicy() public returns(bool cancelled) {
         require(policies[msg.sender].exists);
         policies[msg.sender].termInMonths = 0;
+        policies[msg.sender].exists = false;
         return true;
     }   
 
     function ownerCancelPolicy(address clientAddress) public isOwner() returns(bool cancelled) {
         require(policies[clientAddress].exists);
         policies[msg.sender].termInMonths = 0; // find a way to reset policy
+        policies[msg.sender].exists = false;
         return true;
     }   
 }
