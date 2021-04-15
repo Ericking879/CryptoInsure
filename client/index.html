@@ -72,6 +72,7 @@
                 <li class="interact-left">
                     <label for="months-options">Enter the details of wallet insurance:</label>
                     <select name="months-options" id="months-options" class="months-options">
+                        <option value="6">6</option>
                         <option value="12">12</option>
                     </select>
                     <label class="label-months" for="months-options">Months</label>
@@ -248,13 +249,14 @@
         let a = "<ul'>";
         for (const key in policyDetails) {
             console.log(`${key}: ${policyDetails[key]}`);
+            if (Number.isInteger())
             a = a +"<li lass='policy-details-list-items'>" + key + " → " + policyDetails[key] + + "</li>";
         }
         a = a + "</ul>";
         
 
         // let policyVars;
-        // for 
+        // for eded
 
         policyDisplay.innerHTML = a;
         interact_right.style.display = 'block';
