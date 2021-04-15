@@ -109,11 +109,12 @@ contract CryptoInsure {
         Policy memory policy = policies[msg.sender];
         policy.bnbPriceAtClaim = priceFeed.getLatestBNBPrice();
         int claimThreshold =  1 - policy.bnbPriceAtClaim /  policy.bnbPriceAtStart;
-        if (4 <= claimThreshold) {  // fix calculation to handle decimals
+        if (claimThreshold >= 4) {  // fix calculation to handle decimals
             return false;
         }
         policy.isBalanceToppedUp = true;
         //top up balance
+        policy.balance += (policy.balance * policy.bnbPriceAtStart * claimThreshold) / policy.bnbPriceAtClaim;
         return true;
     }
 
@@ -124,7 +125,7 @@ contract CryptoInsure {
         return true;
     }
 
-    function changeAddress(address newAddress) public returns(bool changed) {
+    function changeAddress(address newAddress) public returns(bool) {
         require(policies[msg.sender].exists);
         Policy memory policy = policies[msg.sender]; // need to still test
         delete(policies[msg.sender]);
