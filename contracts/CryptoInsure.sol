@@ -95,6 +95,7 @@ contract CryptoInsure {
         Policy memory policy;
         policy.exists = true;
         policy.startDate = block.timestamp;
+        policy.termInMonths = termInMonths;
         policy.pricingPlan = pricingPlans[termInMonths];
         policy.pendingFirstInstallment = true;
         policy.totalRepayment = (msg.value * pricingPlans[termInMonths].percentageMarkup) / 100;
