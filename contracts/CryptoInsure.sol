@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >= 0.4.0;
 
-import "./PriceFeed.sol";
+import "./AggregatorV3Interface.sol";
 
 contract CryptoInsure {
 
@@ -30,7 +30,19 @@ contract CryptoInsure {
     address private owner;
     mapping (address => Policy) private policies;
     mapping (uint => PricingPlan) pricingPlans;
-    PriceFeed private priceFeed;
+    AggregatorV3Interface internal BNBPriceFeed;
+
+    constructor() { 
+        owner = msg.sender;
+        pricingPlans[6].percentageMarkup = 140;
+        pricingPlans[6].noOfPayments = 1;
+        pricingPlans[6].waitingPeriodInMonths = 2;
+        pricingPlans[12].percentageMarkup = 120;
+        pricingPlans[12].noOfPayments = 2;
+        pricingPlans[12].waitingPeriodInMonths = 3;
+         // BNB/USD
+        BNBPriceFeed = AggregatorV3Interface(0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526);
+    }
 
     modifier isOwner() {
         require(msg.sender == owner);
@@ -43,14 +55,18 @@ contract CryptoInsure {
         _;
     }
 
-    constructor() { 
-        owner = msg.sender;
-        pricingPlans[6].percentageMarkup = 140;
-        pricingPlans[6].noOfPayments = 1;
-        pricingPlans[6].waitingPeriodInMonths = 2;
-        pricingPlans[12].percentageMarkup = 120;
-        pricingPlans[12].noOfPayments = 2;
-        pricingPlans[12].waitingPeriodInMonths = 3;
+    /**
+     * Returns the latest BNB price
+     */
+    function getLatestBNBPrice() public view returns (int) {
+        (
+            uint80 roundID,
+            int price,
+            uint startedAt,
+            uint timeStamp,
+            uint80 answeredInRound
+        ) = BNBPriceFeed.latestRoundData();
+        return price;
     }
 
     function retrievePolicyEndDate(Policy memory policy) private pure returns(uint endDate) {
@@ -69,7 +85,7 @@ contract CryptoInsure {
         if (remainingPayments == 0) {
             return 0;
         }
-        return policy.startDate + ((policy.termInMonths / 2) * 30 days);
+        return policy.startDate + ((policy.termInMonths / 2) * 30 days); // todo: work out days in month
     } 
 
     function registerPolicy(uint amntToInsure, uint termInMonths) public payable returns(bool registered) { 
@@ -81,8 +97,8 @@ contract CryptoInsure {
         policy.startDate = block.timestamp;
         policy.pricingPlan = pricingPlans[termInMonths];
         policy.pendingFirstInstallment = true;
-        policy.totalRepayment = msg.value * pricingPlans[termInMonths].percentageMarkup;
-        policy.bnbPriceAtStart = priceFeed.getLatestBNBPrice();
+        policy.totalRepayment = (msg.value * pricingPlans[termInMonths].percentageMarkup) / 100;
+        policy.bnbPriceAtStart = getLatestBNBPrice();
         policies[msg.sender] = policy;
     }
 
@@ -107,21 +123,22 @@ contract CryptoInsure {
     function makeClaim() public isPolicyActive(msg.sender) returns(bool) {
         require(!policies[msg.sender].isBalanceToppedUp);
         Policy memory policy = policies[msg.sender];
-        policy.bnbPriceAtClaim = priceFeed.getLatestBNBPrice();
-        int claimThreshold =  1 - policy.bnbPriceAtClaim /  policy.bnbPriceAtStart;
-        if (claimThreshold >= 4) {  // fix calculation to handle decimals
+        policy.bnbPriceAtClaim = getLatestBNBPrice();
+        int claimThreshold =  10000 - ((policy.bnbPriceAtClaim * 10000) / policy.bnbPriceAtStart);
+        if (claimThreshold < 4001) {
             return false;
         }
         policy.isBalanceToppedUp = true;
         //top up balance
-        policy.balance += (policy.balance * policy.bnbPriceAtStart * claimThreshold) / policy.bnbPriceAtClaim;
+        policy.balance += (policy.balance * uint(policy.bnbPriceAtStart * (claimThreshold / 10000))) / uint(policy.bnbPriceAtClaim);
         return true;
     }
 
     function withdraw() public returns(bool) {
         require(policies[msg.sender].exists && !policies[msg.sender].isWithdrawn && address(this).balance >= policies[msg.sender].balance);
         policies[msg.sender].isWithdrawn = true;
-        msg.sender.transfer(policies[msg.sender].balance);
+        address payable wallet = payable(msg.sender);
+        wallet.transfer(policies[msg.sender].balance);
         return true;
     }
 
