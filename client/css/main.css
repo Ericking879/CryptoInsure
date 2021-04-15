@@ -4,10 +4,12 @@
   --secondary-color: #ba160c;
   --secondary-color-dark: #7a3c3c;
   --metamask-color-orange: #F5841F;
+  --off-gray-color: #EFEFEF;
+  --tertiary-color: #73c2fb;
 }
 
 body {
-  background: #EFEFEF;
+  background: var(--off-gray-color);
   margin: 0;
   font-family: "Open Sans";
 }
@@ -124,8 +126,55 @@ section {
   width: 40%;
 }
 
+@media only screen and (max-width: 985px) {
+  section.contract-interaction {
+    padding-top: 5em;
+    background: var(--primary-color);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  section.contract-interaction h2 {
+    margin-bottom: 2em;
+  }
+  section.contract-interaction button {
+    background-color: var(--tertiary-color);
+    border: 0;
+    border-radius: 5em;
+    color: black;
+    padding: 0.25em 0.5em;
+    font-size: large;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  section.contract-interaction label {
+    font-size: large;
+    font-weight: 600;
+    text-align: left;
+  }
+  section.contract-interaction li {
+    margin-top: 2em;
+  }
+  section.contract-interaction select {
+    padding: 0.15em;
+    font-size: large;
+    border: 2px solid black;
+    border-radius: 5em;
+    cursor: pointer;
+  }
+  section.contract-interaction:after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 2.5em;
+    background: var(--secondary-color-dark);
+    right: 0;
+    margin-top: -7em;
+  }
+}
+
 section.features {
-  background: #73c2fb;
+  background: var(--tertiary-color);
   font-weight: 600;
 }
 
@@ -158,6 +207,10 @@ section.features ul li:before {
   margin-top: 0.15em;
 }
 
+.features h2 {
+  color: black;
+}
+
 .features:before {
   content: '';
   position: absolute;
@@ -181,6 +234,10 @@ section.features ul li:before {
 .testimonials {
   background: #cc6666;
   color: white;
+}
+
+.testimonials h2 {
+  color: var(--off-gray-color);
 }
 
 .testimonials:after {
@@ -385,6 +442,61 @@ nav li:hover {
     display: -ms-flexbox;
     display: flex;
   }
+  .contract-interaction {
+    padding-top: 7em;
+    background: var(--primary-color);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .contract-interaction h2 {
+    display: inline-block;
+    margin-bottom: 2em;
+  }
+  .contract-interaction ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    text-align: left;
+  }
+  .contract-interaction label {
+    font-weight: 600;
+  }
+  .contract-interaction button {
+    background-color: var(--tertiary-color);
+    border: 0;
+    border-radius: 5em;
+    color: black;
+    padding: 0.25em 0.5em;
+    font-size: large;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5em;
+    margin-left: 2.75em;
+  }
+  .contract-interaction .submit-new-insurance-plan {
+    margin-left: 0.2em;
+  }
+  .contract-interaction select {
+    padding: 0.15em;
+    font-size: large;
+    border: 2px solid black;
+    border-radius: 5em;
+    cursor: pointer;
+    margin-left: -3em;
+  }
+  .contract-interaction:after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 2.5em;
+    background: var(--secondary-color-dark);
+    right: 0;
+    margin-top: -9em;
+  }
+  .contract-interaction ul li {
+    margin: 0 2em;
+  }
   .features:before {
     content: '';
     position: absolute;
@@ -413,6 +525,13 @@ nav li:hover {
   ul.features li:before {
     width: 30px;
     height: 30px;
+  }
+  .testimonials h2 {
+    margin-bottom: 3em;
+    margin-left: 0.5em;
+  }
+  .testimonials:after {
+    margin-top: 9.5em;
   }
   .testimonials ul {
     display: -webkit-box;

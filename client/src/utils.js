@@ -12,6 +12,7 @@ const getWeb3 = () => {
           }
         } else {
           reject("Must install MetaMask");
+          do_not_have_metamask();
         }
       });
     });
@@ -27,3 +28,12 @@ const getWeb3 = () => {
     );
     return helloworld;
 };
+
+function do_not_have_metamask() {
+  if (window.matchMedia("only screen and (min-width: 700px)").matches) {
+    document.getElementById("no-have-metamask").className = "not-have-metamask";
+  }
+  else {
+    document.getElementById("no-have-metamask").className = "get-metamask";
+  }
+}
