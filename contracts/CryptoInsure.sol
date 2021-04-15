@@ -110,8 +110,8 @@ contract CryptoInsure {
         require(policies[clientAddress].exists);
         Policy memory policy = policies[clientAddress];
         bool isInArrears = block.timestamp >= calculateInstallmentDate(policy);
-        return (policy.balance / 1000000000000000000, policy.totalRepayment / 1000000000000000000, policy.pricingPlan.noOfPayments, 
-                retrieveInstallmentAmount(policy) / 1000000000000000000, policy.pricingPlan.waitingPeriodInMonths, 
+        return (policy.balance / 10000000000000, policy.totalRepayment / 10000000000000, policy.pricingPlan.noOfPayments, 
+                retrieveInstallmentAmount(policy) / 10000000000000, policy.pricingPlan.waitingPeriodInMonths, 
                 isInArrears, policy.startDate, retrievePolicyEndDate(policy), 
                 policy.pendingFirstInstallment, policy.isBalanceToppedUp);
     }
