@@ -152,12 +152,11 @@ contract CryptoInsure {
     } 
 
     function payInstallment(address clientAddress) public payable returns(bool) {
-        Policy memory policy = policies[clientAddress];
-        if (!policy.exists || msg.value < retrieveInstallmentAmount(policy)) {
+        if (!policies[clientAddress].exists || msg.value < retrieveInstallmentAmount(policies[clientAddress])) {
             revert();
         }
-        policy.noOfInstallmentsPaid += 1;
-        policy.pendingFirstInstallment = false;
+        policies[clientAddress].noOfInstallmentsPaid += 1;
+        policies[clientAddress].pendingFirstInstallment = false;
         return true;
     } 
 
