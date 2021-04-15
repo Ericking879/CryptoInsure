@@ -89,7 +89,7 @@ contract CryptoInsure {
     } 
 
     function registerPolicy(uint amntToInsure, uint termInMonths) public payable returns(bool registered) { 
-        if (msg.value < 1 || policies[msg.sender].exists) { // 1 BNB is the minimum insured amount
+        if (msg.value < 100000000 || policies[msg.sender].exists) { // 1 BNB is the minimum insured amount
             revert();
         } 
         Policy memory policy;
@@ -98,7 +98,7 @@ contract CryptoInsure {
         policy.pricingPlan = pricingPlans[termInMonths];
         policy.pendingFirstInstallment = true;
         policy.totalRepayment = (msg.value * pricingPlans[termInMonths].percentageMarkup) / 100;
-        policy.bnbPriceAtStart = 55041566331;//getLatestBNBPrice();
+        policy.bnbPriceAtStart = getLatestBNBPrice();
         policies[msg.sender] = policy;
     }
 
@@ -123,7 +123,7 @@ contract CryptoInsure {
     function makeClaim() public isPolicyActive(msg.sender) returns(bool) {
         require(!policies[msg.sender].isBalanceToppedUp);
         Policy memory policy = policies[msg.sender];
-        policy.bnbPriceAtClaim = 27520783165;//getLatestBNBPrice();
+        policy.bnbPriceAtClaim = getLatestBNBPrice();
         int claimThreshold =  10000 - ((policy.bnbPriceAtClaim * 10000) / policy.bnbPriceAtStart);
         if (claimThreshold < 4001) {
             return false;
@@ -170,12 +170,14 @@ contract CryptoInsure {
     function cancelPolicy() public returns(bool cancelled) {
         require(policies[msg.sender].exists);
         policies[msg.sender].termInMonths = 0;
+        policies[msg.sender].exists = false;
         return true;
     }   
 
     function ownerCancelPolicy(address clientAddress) public isOwner() returns(bool cancelled) {
         require(policies[clientAddress].exists);
         policies[msg.sender].termInMonths = 0; // find a way to reset policy
+        policies[msg.sender].exists = false;
         return true;
     }   
 }
