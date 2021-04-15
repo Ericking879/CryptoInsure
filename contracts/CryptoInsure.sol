@@ -83,7 +83,7 @@ contract CryptoInsure {
         } 
         uint remainingPayments = policy.pricingPlan.noOfPayments - policy.noOfInstallmentsPaid;
         if (remainingPayments == 0) {
-            return 0;
+            return 999999999999;
         }
         return policy.startDate + ((policy.termInMonths / 2) * 30 days); // todo: work out days in month
     } 
