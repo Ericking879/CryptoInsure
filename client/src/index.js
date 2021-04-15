@@ -3,13 +3,14 @@ const displayHelloWorld = async (helloworld, contract) => {
     $("h2").html(helloworld);
   };
   
-  async function hellowWorldApp() {
-    const web3 = await getWeb3();
-    // const accounts = await web3.eth.getAccounts();
-    const contract = await getContract(web3);
-    let helloworld;
-    displayHelloWorld(helloworld, contract);
+  async function runWeb3() {
+    web3 = await getWeb3();
+    accounts = await web3.eth.getAccounts();
+    window.contract = await getContract(web3);
+    console.log(contract);
     // updateGreeting(greeting, contract, accounts);
   }
   
-  hellowWorldApp();
+var web3;
+var accounts;
+runWeb3();

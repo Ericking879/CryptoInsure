@@ -17,7 +17,6 @@
     <script type="text/javascript" src="src/web3.min.js"></script>
     <script type="text/javascript" src="src/utils.js"></script>
     <script type="text/javascript" src="src/index.js"></script>
-    <script type="text/javascript" src="contracts/HelloWorld.json"></script>
     <!--
     <h2 class="title-heading">CryptoInsure</h2>
     Status: <span id="status">Loading Metamask...</span>
@@ -69,29 +68,40 @@
     <section class="contract-interaction">
         <div class="container">
             <h2>Interact With The Smartcontract</h2>
-            <ul>
+            <ul id="uns-list-policy">
                 <li class="interact-left">
-                    <label for="months-options">Enter the months of wallet insurance:</label>
+                    <label for="months-options">Enter the details of wallet insurance:</label>
                     <select name="months-options" id="months-options" class="months-options">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="6">6</option>
-                        <option value="9">9</option>
                         <option value="12">12</option>
                     </select>
+                    <label class="label-months" for="months-options">Months</label>
+
+                    <input name="tokens_amount" type="text" id="tokens_amount">
+                    <label class="label-tokens-amount" for="tokens_amount">BNB amount</label>
 
                     <button class="submit-new-insurance-plan">Begin insurance plan</button>
                 </li>
 
                 <li class="interact-mid">
-                    <label for="pay-months-premium">Click to pay this month's premium:</label>
-                    <button id="pay-months-premium" class="pay-months-premium">Pay</button>
+                    <label >If you have an active policy:</label>
+                    <button id="see_my_policy" class="see-my-policy">See My Policy</button>
                 </li>
 
-                <li class="interact-right">
-                    <label for="request-payout">Request a payout on your insurance plan:</label>
-                    <button id='request-payout' class="request-payout">Request Payout</button>
+                
+            </ul>
+            <ul id="interact-right" class="interact-right">
+                <li class="policy-details-li">
+                    <br><br>
+                    <label for="request-payout">Policy Details:</label>
+                    <div id="policy-details" class="policy-details">rjoeifjeoifjeio</div>
+                </li>
+                <li class="action-btns-cta">
+                    <button id="pay-now" class="pay-now">Pay What I Owe</button>
+                    <button id='request-payout' class="request-payout">Make A Claim</button>
+                    <button id='cancel-policy' class="cancel-policy">Cancel Policy</button>
+                </li>
+                <li>
+                    
                 </li>
             </ul>
         </div>
@@ -179,8 +189,19 @@
   
     mobileBtnExit.addEventListener("click", () => {
         nav.classList.remove("mobile-menu");
-    })</script>
+    })
+    
+    const seePolicyBtn = document.getElementById("see_my_policy");
+          interact_right = document.getElementById("interact-right");
 
+    seePolicyBtn.addEventListener("click", () => {
+        interact_right.style.display = 'block';
+    });
+    
+    </script>
+
+
+    
 </body>
 
 </html>
