@@ -11,9 +11,9 @@
 <body>
     <!--Scripts-->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
-    <script type="text/javascript" src="node_modules/web3/dist/web3.min.js"></script>
+    <!--<script type="text/javascript" src="node_modules/web3/dist/web3.min.js"></script>
     <script type="text/javascript" src="src/connect_web3.js"></script>
-    <script src="src/app.js"></script>
+    <script src="src/app.js"></script>-->
     <script type="text/javascript" src="src/web3.min.js"></script>
     <script type="text/javascript" src="src/utils.js"></script>
     <script type="text/javascript" src="src/index.js"></script>
@@ -66,8 +66,40 @@
         </div>
     </section>
 
+    <section class="contract-interaction">
+        <div class="container">
+            <h2>Interact With The Smartcontract</h2>
+            <ul>
+                <li class="interact-left">
+                    <label for="months-options">Enter the months of wallet insurance:</label>
+                    <select name="months-options" id="months-options" class="months-options">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="6">6</option>
+                        <option value="9">9</option>
+                        <option value="12">12</option>
+                    </select>
+
+                    <button class="submit-new-insurance-plan">Begin insurance plan</button>
+                </li>
+
+                <li class="interact-mid">
+                    <label for="pay-months-premium">Click to pay this month's premium:</label>
+                    <button id="pay-months-premium" class="pay-months-premium">Pay</button>
+                </li>
+
+                <li class="interact-right">
+                    <label for="request-payout">Request a payout on your insurance plan:</label>
+                    <button id='request-payout' class="request-payout">Request Payout</button>
+                </li>
+            </ul>
+        </div>
+    </section>
+
     <section class="features">
         <div class="container">
+            <h2>Features</h2>
             <ul>
                 <li>Fully secure platform</li>
                 <li>Developed on the Binance Smart Chain</li>
@@ -81,6 +113,7 @@
 
     <section class="testimonials">
         <div class="container">
+            <h2>Testimonials</h2>
             <!--People in testimonials generated from fakenamegenerator.com + royalty-free images-->
             <ul class="testimonials-list">
                 <li>
@@ -135,30 +168,18 @@
         </div>
     </section>
 
-
     <script>
-        const mobileBtn = document.getElementById("mobile-cta")
-              nav = document.querySelector("nav") // don't need to say const if don't ; in prev. line
-              mobileBtnExit = document.getElementById("mobile-exit");
-
-        mobileBtn.addEventListener("click", () => {
-            nav.classList.add("mobile-menu");
-        })
-
-        mobileBtnExit.addEventListener("click", () => {
-            nav.classList.remove("mobile-menu");
-        })
-
-        function do_not_have_metamask() {
-            if (window.matchMedia("only screen and (min-width: 700px)").matches) {
-                document.getElementById("no-have-metamask").className = "not-have-metamask";
-            }
-            else {
-                document.getElementById("no-have-metamask").className = "get-metamask";
-            }
-            
-        }
-    </script>
+    const mobileBtn = document.getElementById("mobile-cta")
+        nav = document.querySelector("nav") // don't need to say const if don't ; in prev. line
+        mobileBtnExit = document.getElementById("mobile-exit");
+  
+    mobileBtn.addEventListener("click", () => {
+        nav.classList.add("mobile-menu");
+    })
+  
+    mobileBtnExit.addEventListener("click", () => {
+        nav.classList.remove("mobile-menu");
+    })</script>
 
 </body>
 
