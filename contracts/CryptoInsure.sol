@@ -108,10 +108,9 @@ contract CryptoInsure {
                                                                               uint installmentAmount, uint waitingPeriod, bool isInArrears, 
                                                                               uint startDate, uint endDate, bool pendingFirstInstallment,
                                                                               bool isBalanceToppedUp) {
-        // require(policies[clientAddress].exists);
         Policy memory policy = policies[clientAddress];
         bool isInArrears = block.timestamp >= calculateInstallmentDate(policy);
-        return (policy.balance / 10000000000000, policy.totalRepayment / 10000000000000, policy.pricingPlan.noOfPayments, 
+        return (policy.balance / 10000000000000, policy.totalRepayment / 10000000000000, policy.pricingPlan.noOfPayments - policy.noOfInstallmentsPaid, 
                 retrieveInstallmentAmount(policy) / 10000000000000, policy.pricingPlan.waitingPeriodInMonths, 
                 isInArrears, policy.startDate, retrievePolicyEndDate(policy), 
                 policy.pendingFirstInstallment, policy.isBalanceToppedUp);
@@ -142,6 +141,7 @@ contract CryptoInsure {
         address payable wallet = payable(msg.sender);
         wallet.transfer(policies[msg.sender].balance);
         policies[msg.sender].exists = false;
+        policies[msg.sender].balance = 0;
         return true;
     }
 
@@ -172,14 +172,12 @@ contract CryptoInsure {
     function cancelPolicy() public returns(bool cancelled) {
         require(policies[msg.sender].exists);
         policies[msg.sender].termInMonths = 0;
-        
         return true;
     }   
 
     function ownerCancelPolicy(address clientAddress) public isOwner() returns(bool cancelled) {
         require(policies[clientAddress].exists);
         policies[msg.sender].termInMonths = 0; // find a way to reset policy
-        policies[msg.sender].exists = false;
         return true;
     }   
 }
