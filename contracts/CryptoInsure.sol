@@ -130,7 +130,7 @@ contract CryptoInsure {
         }
         policy.isBalanceToppedUp = true;
         //top up balance
-        policy.balance += (policy.balance * uint(policy.bnbPriceAtStart * (claimThreshold / 10000))) / uint(policy.bnbPriceAtClaim);
+        policy.balance += ((policy.balance * uint(policy.bnbPriceAtStart * claimThreshold)) / 1000) / uint(policy.bnbPriceAtClaim);
         return true;
     }
 
