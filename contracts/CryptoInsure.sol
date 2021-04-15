@@ -100,6 +100,7 @@ contract CryptoInsure {
         policy.totalRepayment = (msg.value * pricingPlans[termInMonths].percentageMarkup) / 100;
         policy.bnbPriceAtStart = getLatestBNBPrice();
         policy.balance = msg.value;
+        policy.isWithdrawn = false;
         policies[msg.sender] = policy;
     }
 
@@ -107,7 +108,7 @@ contract CryptoInsure {
                                                                               uint installmentAmount, uint waitingPeriod, bool isInArrears, 
                                                                               uint startDate, uint endDate, bool pendingFirstInstallment,
                                                                               bool isBalanceToppedUp) {
-        require(policies[clientAddress].exists);
+        // require(policies[clientAddress].exists);
         Policy memory policy = policies[clientAddress];
         bool isInArrears = block.timestamp >= calculateInstallmentDate(policy);
         return (policy.balance / 10000000000000, policy.totalRepayment / 10000000000000, policy.pricingPlan.noOfPayments, 
@@ -136,10 +137,11 @@ contract CryptoInsure {
     }
 
     function withdraw() public returns(bool) {
-        require(policies[msg.sender].exists && !policies[msg.sender].isWithdrawn && address(this).balance >= policies[msg.sender].balance);
+        require(policies[msg.sender].exists && !policies[msg.sender].isWithdrawn);
         policies[msg.sender].isWithdrawn = true;
         address payable wallet = payable(msg.sender);
         wallet.transfer(policies[msg.sender].balance);
+        policies[msg.sender].exists = false;
         return true;
     }
 
@@ -170,7 +172,7 @@ contract CryptoInsure {
     function cancelPolicy() public returns(bool cancelled) {
         require(policies[msg.sender].exists);
         policies[msg.sender].termInMonths = 0;
-        policies[msg.sender].exists = false;
+        
         return true;
     }   
 
