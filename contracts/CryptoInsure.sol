@@ -109,7 +109,7 @@ contract CryptoInsure {
                                                                               bool isBalanceToppedUp) {
         Policy memory policy = policies[clientAddress];
         bool isInArrears = block.timestamp >= calculateInstallmentDate(policy);
-        return (policy.balance / 10000000000000, policy.totalRepayment / 10000000000000, policy.pricingPlan.noOfPayments, 
+        return (policy.balance / 10000000000000, policy.totalRepayment / 10000000000000, policy.pricingPlan.noOfPayments - policy.noOfInstallmentsPaid, 
                 retrieveInstallmentAmount(policy) / 10000000000000, policy.pricingPlan.waitingPeriodInMonths, 
                 isInArrears, policy.startDate, retrievePolicyEndDate(policy), 
                 policy.pendingFirstInstallment, policy.isBalanceToppedUp);
