@@ -254,6 +254,9 @@
             if (key == "balance" || key == "totalRepayment" || key == "installmentAmount") {
                 b = policyDetails[key]/100000;
             }
+            else if (key == "startDate" || key == "endDate") {
+                b = timeConverter(Number(policyDetails[key]));
+            }
             else {
                 b = policyDetails[key];
             }
@@ -293,6 +296,22 @@
         await window.contract.methods.cancelPolicy().send({from: accounts[0]});
         await window.contract.methods.withdraw().send({from: accounts[0]});
     }
+
+
+    function timeConverter(UNIX_timestamp){
+        var a = new Date(UNIX_timestamp * 1000);
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+        return time;
+        console.log(time);
+        }
+
     </script>
 
 
