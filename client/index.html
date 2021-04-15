@@ -249,8 +249,10 @@
         let a = "<ul'>";
         for (const key in policyDetails) {
             console.log(`${key}: ${policyDetails[key]}`);
-            if (Number.isInteger())
-            a = a +"<li lass='policy-details-list-items'>" + key + " → " + policyDetails[key] + + "</li>";
+            if (isNaN(Number(key))) {
+                a = a +"<li lass='policy-details-list-items'>" + key + " → " + policyDetails[key] + "</li>";
+            }
+            
         }
         a = a + "</ul>";
         
