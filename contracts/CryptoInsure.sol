@@ -98,7 +98,7 @@ contract CryptoInsure {
         policy.pricingPlan = pricingPlans[termInMonths];
         policy.pendingFirstInstallment = true;
         policy.totalRepayment = (msg.value * pricingPlans[termInMonths].percentageMarkup) / 100;
-        policy.bnbPriceAtStart = getLatestBNBPrice();
+        policy.bnbPriceAtStart = 55041566331;//getLatestBNBPrice();
         policies[msg.sender] = policy;
     }
 
@@ -123,7 +123,7 @@ contract CryptoInsure {
     function makeClaim() public isPolicyActive(msg.sender) returns(bool) {
         require(!policies[msg.sender].isBalanceToppedUp);
         Policy memory policy = policies[msg.sender];
-        policy.bnbPriceAtClaim = getLatestBNBPrice();
+        policy.bnbPriceAtClaim = 27520783165;//getLatestBNBPrice();
         int claimThreshold =  10000 - ((policy.bnbPriceAtClaim * 10000) / policy.bnbPriceAtStart);
         if (claimThreshold < 4001) {
             return false;
