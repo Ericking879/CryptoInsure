@@ -89,7 +89,7 @@ contract CryptoInsure {
     } 
 
     function registerPolicy(uint amntToInsure, uint termInMonths) public payable returns(bool registered) { 
-        if (msg.value < 100000000 || policies[msg.sender].exists) { // 1 BNB is the minimum insured amount
+        if (msg.value < 1000000000000000000 || policies[msg.sender].exists) { // 1 BNB is the minimum insured amount
             revert();
         } 
         Policy memory policy;
@@ -99,6 +99,7 @@ contract CryptoInsure {
         policy.pendingFirstInstallment = true;
         policy.totalRepayment = (msg.value * pricingPlans[termInMonths].percentageMarkup) / 100;
         policy.bnbPriceAtStart = getLatestBNBPrice();
+        policy.balance = msg.value;
         policies[msg.sender] = policy;
     }
 
