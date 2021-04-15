@@ -79,7 +79,7 @@
                     <input name="tokens_amount" type="text" id="tokens_amount">
                     <label class="label-tokens-amount" for="tokens_amount">BNB amount</label>
 
-                    <button class="submit-new-insurance-plan">Begin insurance plan</button>
+                    <button id="submit-new-insurance-plan" class="submit-new-insurance-plan">Begin insurance plan</button>
                 </li>
 
                 <li class="interact-mid">
@@ -179,6 +179,8 @@
     </section>
 
     <script>
+    var policyDetails;
+
     const mobileBtn = document.getElementById("mobile-cta")
         nav = document.querySelector("nav") // don't need to say const if don't ; in prev. line
         mobileBtnExit = document.getElementById("mobile-exit");
@@ -195,9 +197,69 @@
           interact_right = document.getElementById("interact-right");
 
     seePolicyBtn.addEventListener("click", () => {
-        interact_right.style.display = 'block';
+        loadPolicyDetails();
     });
     
+
+    const newPlanBtn = document.getElementById("submit-new-insurance-plan");
+          payNowBtn = document.getElementById("pay-now");
+          requestPayoutBtn = document.getElementById('request-payout');
+          cancelPolicyBtn = document.getElementById('cancel-policy');
+
+    newPlanBtn.addEventListener("click", () => {
+        createNewPlan();
+    });
+
+    payNowBtn.addEventListener("click", () => {
+        payNow();
+    });
+
+    requestPayoutBtn.addEventListener("click", () => {
+        requestPayout();
+    });
+
+    cancelPolicyBtn.addEventListener("click", () => {
+        cancelPolicy();
+    });
+
+    async function createNewPlan() {
+        const num_months = Number(document.getElementById("months-options").value);
+        const BNBamount = Number(document.getElementById("tokens_amount").value)*(10**18);
+        console.log(num_months + " months insuring " + BNBamount + " wei of BNB");
+
+        await window.contract.methods.registerPolicy(num_months).send({
+            from: accounts[0],
+            value: BNBamount
+        });
+    }
+
+    async function loadPolicyDetails() {
+        const policyDisplay = document.getElementById("policy-details");
+        policyDetails = "blank";//await window.contract.methods.retrievePolicyDetails(accounts[0]).call();
+        policyDisplay.innerHTML = policyDetails;
+        interact_right.style.display = 'block';
+    }
+
+    async function payNow() {
+        await loadPolicyDetails();
+        const installment = policyDetails[3];
+        console.log("Paying " + installment);
+        await window.contract.methods.payInstallment(accounts[0]).send({
+            from: account[0],
+            value: installment
+        });
+    }
+
+    async function requestPayout() {
+        console.log("Request payout");
+        await window.contract.methods.makeClaim(accounts[0]).send({from: accounts[0]});
+    }
+
+    async function cancelPolicy() {
+        console.log("Cancel policy");
+        await window.contract.methods.cancelPolicy().send({from: accounts[0]});
+        await window.contract.methods.withdraw().send({from: accounts[0]});
+    }
     </script>
 
 
