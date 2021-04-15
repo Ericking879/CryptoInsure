@@ -18,15 +18,15 @@ const getWeb3 = () => {
     });
   };
 
-  const getContract = async (web3) => {
-    const data = await $.getJSON("contracts/HelloWorld.json");
+const getContract = async (web3) => {
+    const data = await $.getJSON("contracts/CryptoInsure.json");
     const netId = await web3.eth.net.getId();
     const deployedNetwork = data.networks[netId];
-    const helloworld = new web3.eth.Contract(
+    const newContract = new web3.eth.Contract(
       data.abi,
       deployedNetwork && deployedNetwork.address
     );
-    return helloworld;
+    return newContract;
 };
 
 function do_not_have_metamask() {
