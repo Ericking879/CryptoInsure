@@ -21,7 +21,6 @@ contract CryptoInsure {
         int bnbPriceAtClaim;
         uint noOfInstallmentsPaid; // no of paid installments
         uint totalRepayment; // the total repayment amount over the insured period
-        bool isInArrears; // true if an installment was missed else false
         bool isClaimApproved; // true if a claim made was approved else false
         bool isWithdrawn;
         uint noOfClaims; // claim > 1 means invalid/declined claims
@@ -40,7 +39,8 @@ contract CryptoInsure {
 
     modifier isPolicyActive(address clientAddress) {
         Policy memory policy = policies[clientAddress];
-        require(policy.exists && !policy.isInArrears && !policy.isClaimApproved && block.timestamp < retrievePolicyEndDate(policy));
+        
+        require(policy.exists && !isInArrears(policy) && !policy.isClaimApproved && block.timestamp < retrievePolicyEndDate(policy));
         _;
     }
 
@@ -62,6 +62,24 @@ contract CryptoInsure {
         return policy.totalRepayment / policy.pricingPlan.noOfPayments;
     }
 
+    function isInArrears(Policy memory policy) private view returns(bool isArrears) {
+        if (!policy.pendingFirstInstallment) {
+            return block.timestamp >= calculateInstallmentDate(policy);
+        }
+        return false;
+    }   
+
+    function calculateInstallmentDate(Policy memory policy) private view returns(uint nextInstallmentDate) {
+        if (policy.pendingFirstInstallment) {
+            return block.timestamp;
+        } 
+        uint remainingPayments = policy.pricingPlan.noOfPayments - policy.noOfInstallmentsPaid;
+        if (remainingPayments == 0) {
+            return 0;
+        }
+        return policy.startDate + ((policy.termInMonths / 2) * 30 days);
+    } 
+
     function registerPolicy(uint amntToInsure, uint termInMonths) public payable returns(bool registered) { 
         if (msg.value < 1 || policies[msg.sender].exists) { // 1 BNB is the minimum insured amount
             revert();
@@ -78,10 +96,14 @@ contract CryptoInsure {
 
     function retrievePolicyDetails(address clientAddress) public view returns(uint balance, uint totalRepayment, uint noOfInstallments, 
                                                                               uint installmentAmount, uint waitingPeriod, bool isInArrears, 
-                                                                              uint startDate, uint endDate) {
+                                                                              uint startDate, uint endDate, bool pendingFirstInstallment) {
         //  insuredAmount, totalRepayment, noOfInstallments, installmentAmount, waitingPeriod, isInArrears, startDate, endDate
         Policy memory policy = policies[clientAddress];
-        return (policy.balance, policy.totalRepayment, policy.pricingPlan.noOfPayments, retrieveInstallmentAmount(policy), policy.pricingPlan.waitingPeriodInMonths, policy.isInArrears, policy.startDate, retrievePolicyEndDate(policy));
+        
+        bool isInArrears = isInArrears = block.timestamp >= calculateInstallmentDate(policy);
+        return (policy.balance, policy.totalRepayment, policy.pricingPlan.noOfPayments, 
+                retrieveInstallmentAmount(policy), policy.pricingPlan.waitingPeriodInMonths, 
+                isInArrears, policy.startDate, retrievePolicyEndDate(policy), policy.pendingFirstInstallment);
     }
 
     function hasPolicyMatured(address clientAddress) public view returns(bool matured) {
@@ -105,10 +127,13 @@ contract CryptoInsure {
     }
 
     function withdraw(address clientAddress) public view returns(bool approved) {
-        // if (claimApproved || policyCancelled || reachedMaturityDate)
+        Policy memory policy = policies[clientAddress];
+        if (!policy.exists || policy.pendingFirstInstallment) {
+            // decline withdraw
+        }
     }
 
-    function changeAddress(address clientAddress, address newAddress) public returns(bool changed) {
+    function changeAddress(address clientAddress, address newAddress) public isPolicyActive(clientAddress) returns(bool changed) {
         Policy memory policy = policies[clientAddress]; // need to still test
         delete(policies[clientAddress]);
         policies[newAddress] = policy;
@@ -123,16 +148,9 @@ contract CryptoInsure {
     } 
 
     // assuming a maximum of 2 installments over 12 month period for now
-    function getNextInstallmentDetails(address clientAddress) public isPolicyActive(clientAddress) view returns(uint nextInstallmentDate) {
+    function getNextInstallmentDate(address clientAddress) public isPolicyActive(clientAddress) view returns(uint nextInstallmentDate) {
         Policy memory policy = policies[clientAddress];
-        if (policy.pendingFirstInstallment) {
-            return block.timestamp;
-        } 
-        uint remainingPayments = policy.pricingPlan.noOfPayments - policy.noOfInstallmentsPaid;
-        if (remainingPayments == 0) {
-            return 0;
-        }
-        return policy.startDate + ((policy.termInMonths / 2) * 30 days);
+        return calculateInstallmentDate(policy);
     } 
 
     function cancelPolicy(address clientAddress) public returns(bool cancelled) {
