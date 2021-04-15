@@ -21,7 +21,7 @@ contract CryptoInsure {
         int bnbPriceAtClaim;
         uint noOfInstallmentsPaid; // no of paid installments
         uint totalRepayment; // the total repayment amount over the insured period
-        bool isClaimApproved; // true if a claim made was approved else false
+        bool isBalanceToppedUp; // true if a claim made was approved else false
         bool isWithdrawn;
         uint noOfClaims; // claim > 1 means invalid/declined claims
         PricingPlan pricingPlan;
@@ -39,7 +39,7 @@ contract CryptoInsure {
 
     modifier isPolicyActive(address clientAddress) {
         Policy memory policy = policies[clientAddress];
-        require(policy.exists && block.timestamp < calculateInstallmentDate(policy) && !policy.isClaimApproved && block.timestamp < retrievePolicyEndDate(policy));
+        require(policy.exists && block.timestamp < calculateInstallmentDate(policy) && block.timestamp < retrievePolicyEndDate(policy));
         _;
     }
 
@@ -88,13 +88,15 @@ contract CryptoInsure {
 
     function retrievePolicyDetails(address clientAddress) public view returns(uint balance, uint totalRepayment, uint noOfInstallments, 
                                                                               uint installmentAmount, uint waitingPeriod, bool isInArrears, 
-                                                                              uint startDate, uint endDate, bool pendingFirstInstallment) {
+                                                                              uint startDate, uint endDate, bool pendingFirstInstallment,
+                                                                              bool isBalanceToppedUp) {
         require(policies[clientAddress].exists);
         Policy memory policy = policies[clientAddress];
         bool isInArrears = block.timestamp >= calculateInstallmentDate(policy);
         return (policy.balance, policy.totalRepayment, policy.pricingPlan.noOfPayments, 
                 retrieveInstallmentAmount(policy), policy.pricingPlan.waitingPeriodInMonths, 
-                isInArrears, policy.startDate, retrievePolicyEndDate(policy), policy.pendingFirstInstallment);
+                isInArrears, policy.startDate, retrievePolicyEndDate(policy), 
+                policy.pendingFirstInstallment, policy.isBalanceToppedUp);
     }
 
     function hasPolicyMatured(address clientAddress) public view returns(bool) {
@@ -102,27 +104,24 @@ contract CryptoInsure {
         return block.timestamp >= retrievePolicyEndDate(policies[clientAddress]);
     }
 
-    function isClaimApproved(address clientAddress) public view returns(bool approved) { // this method might be useless
-        require(policies[clientAddress].exists);
-        return policies[clientAddress].isClaimApproved;
-    }
-
-    function makeClaim(address clientAddress) public isPolicyActive(clientAddress) returns(bool) {
-        Policy memory policy = policies[clientAddress];
+    function makeClaim() public isPolicyActive(msg.sender) returns(bool) {
+        require(!policies[msg.sender].isBalanceToppedUp);
+        Policy memory policy = policies[msg.sender];
         policy.bnbPriceAtClaim = priceFeed.getLatestBNBPrice();
-
         int claimThreshold =  1 - policy.bnbPriceAtClaim /  policy.bnbPriceAtStart;
         if (4 <= claimThreshold) {  // fix calculation to handle decimals
             return false;
         }
-        policy.isClaimApproved = true;
+        policy.isBalanceToppedUp = true;
+        //top up balance
         return true;
     }
 
-    function withdraw() public view returns(bool) {
-        require(policies[msg.sender].exists);
-        Policy memory policy = policies[msg.sender];
-        
+    function withdraw() public returns(bool) {
+        require(policies[msg.sender].exists && !policies[msg.sender].isWithdrawn && address(this).balance >= policies[msg.sender].balance);
+        policies[msg.sender].isWithdrawn = true;
+        msg.sender.transfer(policies[msg.sender].balance);
+        return true;
     }
 
     function changeAddress(address newAddress) public returns(bool changed) {
@@ -161,5 +160,4 @@ contract CryptoInsure {
         policies[msg.sender].termInMonths = 0; // find a way to reset policy
         return true;
     }   
-
 }
