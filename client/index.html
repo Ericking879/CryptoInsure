@@ -247,10 +247,19 @@
         policyDetails = policyDetailsUser;
 
         let a = "<ul'>";
+        let b;
         for (const key in policyDetails) {
             console.log(`${key}: ${policyDetails[key]}`);
+            
+            if (key == "balance" || key == "totalRepayment" || key == "installmentAmount") {
+                b = policyDetails[key]/100000;
+            }
+            else {
+                b = policyDetails[key];
+            }
+
             if (isNaN(Number(key))) {
-                a = a +"<li lass='policy-details-list-items'>" + key + " → " + policyDetails[key] + "</li>";
+                a = a +"<li lass='policy-details-list-items'>" + key + " → " + b + "</li>";
             }
             
         }
