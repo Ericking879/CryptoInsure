@@ -350,7 +350,7 @@
 
     async function payNow() {
         await loadPolicyDetails();
-        const installment = policyDetails[3]*(10**13);
+        const installment = policyDetails["installmentAmount"]*(10**13);
         console.log("Paying " + installment);
         await window.contract.methods.payInstallment(accounts[0]).send({
             from: accounts[0],

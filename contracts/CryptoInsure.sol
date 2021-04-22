@@ -27,6 +27,20 @@ contract CryptoInsure {
         PricingPlan pricingPlan;
     }
 
+    struct PolicyOutput {
+        uint balance;
+        int bnbPriceAtStart;
+        uint totalRepayment;
+        uint noOfInstallments;
+        uint installmentAmount;
+        uint waitingPeriod;
+        bool isInArrears; 
+        uint startDate;
+        uint endDate;
+        bool pendingFirstInstallment;
+        bool isBalanceToppedUp; 
+    }
+
     address private owner;
     mapping (address => Policy) private policies;
     mapping (uint => PricingPlan) pricingPlans;
@@ -105,16 +119,23 @@ contract CryptoInsure {
         policies[msg.sender] = policy;
     }
 
-    function retrievePolicyDetails(address clientAddress) public view returns(uint balance, int bnbPriceAtStart, uint totalRepayment, uint noOfInstallments, 
-                                                                              uint installmentAmount, uint waitingPeriod, bool isInArrears, 
-                                                                              uint startDate, uint endDate, bool pendingFirstInstallment,
-                                                                              bool isBalanceToppedUp) {
+    function retrievePolicyDetails(address clientAddress) public view returns(PolicyOutput memory) {
         Policy memory policy = policies[clientAddress];
-        bool isInArrears = block.timestamp >= calculateInstallmentDate(policy);
-        return (policy.balance / 10000000000000, policy.bnbPriceAtStart, policy.totalRepayment / 10000000000000, policy.pricingPlan.noOfPayments - policy.noOfInstallmentsPaid, 
-                retrieveInstallmentAmount(policy) / 10000000000000, policy.pricingPlan.waitingPeriodInMonths, 
-                isInArrears, policy.startDate, retrievePolicyEndDate(policy), 
-                policy.pendingFirstInstallment, policy.isBalanceToppedUp);
+        PolicyOutput memory output;
+
+        output.balance = policy.balance / 10000000000000;
+        output.bnbPriceAtStart = policy.bnbPriceAtStart;
+        output.totalRepayment = policy.totalRepayment / 10000000000000;
+        output.noOfInstallments = policy.pricingPlan.noOfPayments - policy.noOfInstallmentsPaid;
+        output.installmentAmount = retrieveInstallmentAmount(policy) / 10000000000000;
+        output.waitingPeriod = policy.pricingPlan.waitingPeriodInMonths;
+        output.isInArrears = block.timestamp >= calculateInstallmentDate(policy);
+        output.startDate = policy.startDate;
+        output.endDate = retrievePolicyEndDate(policy);
+        output.pendingFirstInstallment = policy.pendingFirstInstallment;
+        output.isBalanceToppedUp = policy.isBalanceToppedUp;
+        
+        return (output);
     }
 
     function hasPolicyMatured(address clientAddress) public view returns(bool) {
