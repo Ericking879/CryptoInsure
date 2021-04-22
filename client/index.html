@@ -52,8 +52,8 @@
                 <h1>Crypto<span>Insure</span> <div class="DeIns-title">Decentralized Insurance</div></h1>
 
                 <div class="hero-cta">
-                    <a href="#" class="primary-cta">See how it works</a>
-                    <a href="https://youtu.be/BqSkIl1rrNo" class="watch-video-cta">
+                    <a href="howto.html" class="primary-cta">See how it works</a>
+                    <a target="_blank" href="https://youtu.be/BqSkIl1rrNo" class="watch-video-cta">
                         <img src="assets/yt_play_button.svg" alt="Watch The Demo Video">
                         Watch the demo video
                     </a>
@@ -271,7 +271,7 @@
                     d = "Total To Pay For Insurance";
                 } else if (key == "bnbPriceAtStart") {
                     d = "Starting Price";
-                    b = Math.round(policyDetails[key]/10**6)/100 + " USD/BNB";
+                    b = Math.round(policyDetails[key]/10**6)/100 + " BNB/USD";
                 } else {
                     d = "Payment Each Installment";
                 }

@@ -583,6 +583,24 @@ nav li:hover {
   .contact-right iframe {
     height: 100%;
   }
+  .how-to:before {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 2.5em;
+    background: var(--secondary-color-dark);
+    right: 0;
+    margin-top: -10em;
+  }
+  .how-to:after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 2.5em;
+    background: var(--secondary-color-dark);
+    left: 0;
+    margin-top: 8em;
+  }
 }
 
 .not-have-metamask {
@@ -612,5 +630,38 @@ nav li:hover {
 
 table {
   border-spacing: 25px 0px;
+}
+
+.how-to {
+  background: var(--tertiary-color);
+}
+
+.how-to ul {
+  list-style-type: circle;
+}
+
+.how-to h3 {
+  font-weight: 600;
+}
+
+@media only screen and (max-width: 985px) {
+  .how-to:before {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 2.5em;
+    background: var(--secondary-color-dark);
+    right: 0;
+    margin-top: -5em;
+  }
+  .how-to:after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 2.5em;
+    background: var(--secondary-color-dark);
+    left: 0;
+    margin-top: 3em;
+  }
 }
 /*# sourceMappingURL=main.css.map */

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta description="How-to page for interacting with the smart contract">
+    <link rel="stylesheet" href="css/main.css">
+    <title>How-to Page</title>
+</head>
+<body>
+    <div class="navbar">
+        <div class="container">
+            <!--Wordmark:-->
+            <a class="logo" href="index.html">Crypto<span>Insure</span></a>
+
+            <!--CTA = call to animation-->
+            <img id="mobile-cta" class="mobile-menu" src="assets/menu.svg" alt="Menu Button">
+
+            <nav>
+                <img id="mobile-exit" class="mobile-menu-exit" src="assets/exit.svg" alt="Exit Menu Button">
+
+                <!--unordered list-->
+                <ul class="primary-nav">
+                    <!--list item-->
+                    <li id="no-have-metamask" class="get-metamask"><a href="https://metamask.io/download">Get Metamask</a></li> <!--CTRL+ALT+DOWN to copy lines-->
+                    <li class="bsc-scan"><a href="https://www.bscscan.com/">BSC Scan</a></li>
+                    <li class="github"><a href="https://github.com/Ericking879/BSC-Master-class-group-28-project">Github Repo</a></li> <!--use # for blank link-->
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <section class="how-to">
+        <div class="container">
+            <h2>How To Interact With The Smartcontract</h2>
+            <ul>
+                <li>
+                    <h3>To create a policy and insure some of your crypto, just simply select the length of insurance and fill in the amount you would like to insure (1 BNB minimum). Then click 'Begin Insurance Plan.'</h3>
+                </li>
+                <li>
+                    <h3>Next, you will need to pay the first installment as indicated in the policy details. If the policy details do not automatically show, click 'See My Policy.'<br><br>Once the details appear, click 'Pay What I Owe' to pay the first installment.</h3>
+                </li>
+                <li>
+                    <h3>If you would like to make a claim, after the waiting period has elapsed and the USD value of your crypto has decreased by at least 40%, then click 'Make A Claim.'</h3>
+                </li>
+                <li>
+                    <h3>If you would like to cancel your policy and withdraw your crypto, then click 'Withdraw'. You must confirm two separate transactions to receive your crypto: one to cancel the policy, and the other to withdraw your funds.</h3>
+                </li>
+            </ul>
+            
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-left">
+                <h2>Contact For Inquiries</h2>
+
+                <form action="">
+                    <label for="name">Name</label>
+                    <input id="name" type="text" name="name">
+
+                    <label for="email">Email</label>
+                    <input id="emaii" type="email" name="email">
+
+                    <label for="message">Message</label>
+                    <textarea name="message" id="message" cols="30" rows="10" placeholder="Enter your inquiry message..."></textarea>
+
+                    <input type="submit" class="send-message-cta" value="Send Message">
+                </form>
+            </div>
+
+            <div class="contact-right">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3221.903300718437!2d-115.17753911316142!3d36.14456767830642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c8c3f921d75f97%3A0xfaed8f546ddb5015!2sPizza%20Hut!5e0!3m2!1sen!2sza!4v1617985615410!5m2!1sen!2sza" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    const mobileBtn = document.getElementById("mobile-cta")
+        nav = document.querySelector("nav") // don't need to say const if don't ; in prev. line
+        mobileBtnExit = document.getElementById("mobile-exit");
+  
+    mobileBtn.addEventListener("click", () => {
+        nav.classList.add("mobile-menu");
+    })
+  
+    mobileBtnExit.addEventListener("click", () => {
+        nav.classList.remove("mobile-menu");
+    })
+    </script>
+</body>
+</html>
