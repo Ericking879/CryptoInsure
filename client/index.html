@@ -53,7 +53,7 @@
 
                 <div class="hero-cta">
                     <a href="#" class="primary-cta">See how it works</a>
-                    <a href="#" class="watch-video-cta">
+                    <a href="https://youtu.be/BqSkIl1rrNo" class="watch-video-cta">
                         <img src="assets/yt_play_button.svg" alt="Watch The Demo Video">
                         Watch the demo video
                     </a>
@@ -80,7 +80,7 @@
                     <input name="tokens_amount" type="text" id="tokens_amount">
                     <label class="label-tokens-amount" for="tokens_amount">BNB amount</label>
 
-                    <button id="submit-new-insurance-plan" class="submit-new-insurance-plan">Begin insurance plan</button>
+                    <button id="submit-new-insurance-plan" class="submit-new-insurance-plan">Begin Insurance Plan</button>
                 </li>
 
                 <li class="interact-mid">
@@ -239,6 +239,8 @@
             from: accounts[0],
             value: BNBamount,
         });
+
+        await loadPolicyDetails();
     }
 
     async function loadPolicyDetails() {
@@ -246,33 +248,100 @@
         const policyDetailsUser = await window.contract.methods.retrievePolicyDetails(accounts[0]).call();
         policyDetails = policyDetailsUser;
 
-        let a = "<ul'>";
-        let b;
+        let a = "<table>";
+        let add_class = "";
+        let b, d;
+        let no_active_policy = false;
+        let policyInArrears = false;
         for (const key in policyDetails) {
             console.log(`${key}: ${policyDetails[key]}`);
             
+            if (key == "balance" && policyDetails[key] == 0) {
+                a = a + "<th>No active policy for your wallet address</th>";
+                no_active_policy = true;
+                break;
+            }
+
+
             if (key == "balance" || key == "totalRepayment" || key == "installmentAmount") {
-                b = policyDetails[key]/100000;
+                b = policyDetails[key]/100000 + " BNB";
+                if (key == "balance") {
+                    d = "Insured Balance";
+                } else if (key == "totalRepayment") {
+                    d = "Total To Pay For Insurance";
+                } else {
+                    d = "Payment Each Installment";
+                }
             }
             else if (key == "startDate" || key == "endDate") {
                 b = timeConverter(Number(policyDetails[key]));
+                if (key == "startDate") {
+                    d = "Policy Start Date";
+                } else {
+                    d = "Policy End Date";
+                }
             }
             else {
+                // b = "";
                 b = policyDetails[key];
+                if (key == "noOfInstallments") {
+                    d = "Installments Left To Pay";
+                } else if (key == "waitingPeriod") {
+                    d = "Waiting Period";
+                    b = policyDetails[key] + " months";
+                } else if (key == "isBalanceToppedUp") {
+                    if (policyDetails[key]) {
+                        d = "Claim Approved";
+                        b = "";
+                        add_class = "class='confirm'";
+                    } else {
+                        continue;
+                    }
+                } else if (key == "isInArrears") {
+                    if (policyDetails[key]) {
+                        policyInArrears = true;
+                    }
+                    continue;
+                } else if (key == "pendingFirstInstallment") {
+                    if (policyDetails[key]) {
+                        d = "Pay First Installment";
+                        b = "";
+                        add_class = "class='warning'";
+                    } else if (policyInArrears) {
+                        d = "Policy Void, Late Payment";
+                        b = "";
+                        add_class = "class='warning'";
+                    } else {
+                        continue;
+                    }
+                } else {
+                    d = key;
+                }
             }
 
             if (isNaN(Number(key))) {
-                a = a +"<li lass='policy-details-list-items'>" + key + " → " + b + "</li>";
+                a = a +"<tr>" + "<th>" + "<div "+add_class+">" + d + "</div>" + "</th><td>" + b + "</td></tr>";
+                // console.log("log ->", d, b);
             }
+            add_class = "";
             
         }
-        a = a + "</ul>";
+        a = a + "</table>";
         
-
-        // let policyVars;
-        // for eded
+        // Hide contract interaction buttons if no policy exists
+        // or show the buttons if one does exist.
+        if (no_active_policy) {
+            payNowBtn.style.visibility = "hidden";
+            requestPayoutBtn.style.visibility = "hidden";
+            cancelPolicyBtn.style.visibility = "hidden";
+        } else {
+            payNowBtn.style.visibility = "visible";
+            requestPayoutBtn.style.visibility = "visible";
+            cancelPolicyBtn.style.visibility = "visible";
+        }
 
         policyDisplay.innerHTML = a;
+        
         interact_right.style.display = 'block';
     }
 
@@ -284,17 +353,20 @@
             from: accounts[0],
             value: installment
         });
+        await loadPolicyDetails();
     }
 
     async function requestPayout() {
         console.log("Request payout");
         await window.contract.methods.makeClaim().send({from: accounts[0]});
+        await loadPolicyDetails();
     }
 
     async function cancelPolicy() {
         console.log("Cancel policy");
         await window.contract.methods.cancelPolicy().send({from: accounts[0]});
         await window.contract.methods.withdraw().send({from: accounts[0]});
+        await loadPolicyDetails();
     }
 
 

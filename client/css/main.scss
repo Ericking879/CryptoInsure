@@ -694,3 +694,23 @@ nav {
 .policy-details-list-items {
     display: block;
 }
+
+.warning {
+    text-align: center;
+    background: var(--secondary-color);
+    border: 3px solid black;
+    padding: 0.5em;
+    // border-radius: 10em;
+}
+
+.confirm {
+    text-align: center;
+    background: var(--primary-color);
+    border: 3px solid black;
+    padding: 0.5em;
+    // border-radius: 10em;
+}
+
+table{
+    border-spacing: 25px 0px;
+}
