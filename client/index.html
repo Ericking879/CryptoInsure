@@ -263,12 +263,15 @@
             }
 
 
-            if (key == "balance" || key == "totalRepayment" || key == "installmentAmount") {
+            if (key == "balance" || key == "totalRepayment" || key == "installmentAmount" || key == "bnbPriceAtStart") {
                 b = policyDetails[key]/100000 + " BNB";
                 if (key == "balance") {
                     d = "Insured Balance";
                 } else if (key == "totalRepayment") {
                     d = "Total To Pay For Insurance";
+                } else if (key == "bnbPriceAtStart") {
+                    d = "Starting Price";
+                    b = Math.round(policyDetails[key]/10**6)/100 + " USD/BNB";
                 } else {
                     d = "Payment Each Installment";
                 }

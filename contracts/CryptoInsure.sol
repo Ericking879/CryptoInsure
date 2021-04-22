@@ -105,13 +105,13 @@ contract CryptoInsure {
         policies[msg.sender] = policy;
     }
 
-    function retrievePolicyDetails(address clientAddress) public view returns(uint balance, uint totalRepayment, uint noOfInstallments, 
+    function retrievePolicyDetails(address clientAddress) public view returns(uint balance, int bnbPriceAtStart, uint totalRepayment, uint noOfInstallments, 
                                                                               uint installmentAmount, uint waitingPeriod, bool isInArrears, 
                                                                               uint startDate, uint endDate, bool pendingFirstInstallment,
                                                                               bool isBalanceToppedUp) {
         Policy memory policy = policies[clientAddress];
         bool isInArrears = block.timestamp >= calculateInstallmentDate(policy);
-        return (policy.balance / 10000000000000, policy.totalRepayment / 10000000000000, policy.pricingPlan.noOfPayments - policy.noOfInstallmentsPaid, 
+        return (policy.balance / 10000000000000, policy.bnbPriceAtStart, policy.totalRepayment / 10000000000000, policy.pricingPlan.noOfPayments - policy.noOfInstallmentsPaid, 
                 retrieveInstallmentAmount(policy) / 10000000000000, policy.pricingPlan.waitingPeriodInMonths, 
                 isInArrears, policy.startDate, retrievePolicyEndDate(policy), 
                 policy.pendingFirstInstallment, policy.isBalanceToppedUp);
