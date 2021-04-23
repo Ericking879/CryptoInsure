@@ -7,6 +7,9 @@
     <meta description="How-to page for interacting with the smart contract">
     <link rel="stylesheet" href="css/main.css">
     <title>How-to Page</title>
+
+    <!--Load JS for buttons after HTML body loads (defer)-->
+    <script src="src/common.js" defer></script>
 </head>
 <body>
     <div class="navbar">
@@ -78,18 +81,5 @@
         </div>
     </section>
 
-    <script>
-    const mobileBtn = document.getElementById("mobile-cta")
-        nav = document.querySelector("nav") // don't need to say const if don't ; in prev. line
-        mobileBtnExit = document.getElementById("mobile-exit");
-  
-    mobileBtn.addEventListener("click", () => {
-        nav.classList.add("mobile-menu");
-    })
-  
-    mobileBtnExit.addEventListener("click", () => {
-        nav.classList.remove("mobile-menu");
-    })
-    </script>
 </body>
 </html>
